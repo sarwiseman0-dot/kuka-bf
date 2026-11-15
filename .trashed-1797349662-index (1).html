@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>KUKA MUSIC</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0b0612"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="style.css"></head><body>
+<header><div class="logo"><i></i>KUKA <span>MUSIC</span></div></header>
+<main id="main"></main>
+<div id="sheet" class="sheet"></div>
+<div class="player"><div class="pw">
+<div class="pr"><div class="cv" id="pcv"></div><div class="m"><b id="pt">Aucun titre</b><small id="pa">Choisis un titre</small></div><button class="ic" id="pf" aria-label="Favori">♡</button><button class="ic" id="pb" aria-label="Précédent">⏮</button><button class="pp" id="pp" aria-label="Lecture">▶</button><button class="ic" id="pn" aria-label="Suivant">⏭</button></div>
+<div class="pr2"><button class="ic" id="sh" aria-label="Aléatoire">⇄</button><span id="cu">0:00</span><input type="range" id="sk" min="0" max="1000" value="0" aria-label="Position"><span id="du">0:00</span><button class="ic" id="rp" aria-label="Répéter">↻</button></div>
+<div class="pr2"><span>🔈</span><input type="range" id="vo" min="0" max="100" value="70" aria-label="Volume"></div>
+</div></div>
+<nav><button data-v="home" class="on"><span>⌂</span>Accueil</button><button data-v="search"><span>⌕</span>Recherche</button><button data-v="lib"><span>♫</span>Bibliothèque</button><button data-v="set"><span>⚙</span>Réglages</button></nav>
+<script src="app.js"></script></body></html>
