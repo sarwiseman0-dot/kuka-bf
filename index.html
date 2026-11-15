@@ -51,13 +51,13 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px s
 nav button{flex:1;max-width:240px;height:58px;font-weight:600;color:var(--mu)}
 nav button.on{color:var(--ac)}
 .free{margin:10px 6px;padding:12px 14px;border-radius:14px;background:linear-gradient(120deg,var(--ac),var(--ac2));color:#2a1740;font-weight:600}
-.pl{background:var(--sf);border-radius:14px;padding:10px;margin:10px 0}.pl h3{margin:0 0 6px}.in{padding:10px 14px;border-radius:999px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;max-width:100%}.bt{display:inline-block;padding:10px 16px;border-radius:999px;background:var(--ac);color:#fff;font-weight:600;margin:4px 4px 4px 0;cursor:pointer}.bt.g{background:var(--ln);color:var(--tx)}nav button{font-size:13px}
+.pl{background:var(--sf);border-radius:14px;padding:10px;margin:10px 0}.pl h3{margin:0 0 6px}.in{padding:10px 14px;border-radius:999px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;max-width:100%}.bt{display:inline-block;padding:10px 16px;border-radius:999px;background:var(--ac);color:#fff;font-weight:600;margin:4px 4px 4px 0;cursor:pointer}.bt.g{background:var(--ln);color:var(--tx)}nav button{font-size:13px}.ad{position:fixed;inset:0;background:rgba(10,5,20,.94);z-index:20;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff}.ad.on{display:flex}.ad>div{max-width:340px}.tg{font-size:12px;opacity:.7;letter-spacing:1px;text-transform:uppercase}.bn{margin:10px 6px;padding:10px 14px;border-radius:14px;border:1px dashed var(--ln);color:var(--mu);font-size:13px;text-align:center}.sw{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
 </style>
 </head>
 <body>
 <header>
   <div class="logo"><i></i>kuka</div>
-  <p class="tag">Toute la musique, gratuite. Sans pub, sans premium.</p>
+  <p class="tag">Toute la musique, gratuite avec pubs. Premium bientôt.</p>
 </header>
 <main id="main"></main>
 
@@ -75,7 +75,8 @@ nav button.on{color:var(--ac)}
   </div>
 </div></div>
 
-<nav><button data-v="home" class="on">Accueil</button><button data-v="search">Recherche</button><button data-v="fav">Favoris</button><button data-v="lists">Playlists</button><button data-v="me">Profil</button></nav>
+<nav><button data-v="home" class="on">Accueil</button><button data-v="search">Recherche</button><button data-v="fav">Favoris</button><button data-v="lists">Playlists</button><button data-v="me">Réglages</button></nav>
+<div class="ad" id="ad"><div><p class="tg">Publicité</p><h2>Ta pub ici</h2><p>Espace réservé aux annonceurs de kuka.</p><p id="adc">Ton titre démarre dans 5 s</p></div></div>
 
 <script>
 var T=[
@@ -90,7 +91,12 @@ var T=[
 ];
 var SC=[0,2,3,5,7,8,10,12,14,15,17,19];
 var DUR=60,cur=0,pos=0,playing=false,shuf=false,rep=0,vol=.7,view="home",q="";
-var user="",likes=[],PL=[],au=new Audio();au.onended=function(){done()};
+var user="",likes=[],PL=[],au=new Audio(),PREMIUM=false,AUTO=true,CNT=0,THEME="auto";au.onended=function(){done()};
+try{THEME=localStorage.getItem("kuka-theme")||"auto"}catch(e){}
+function setTheme(t){THEME=t;var r=document.documentElement;if(t==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",t);try{localStorage.setItem("kuka-theme",t)}catch(e){}}
+setTheme(THEME);
+function showAd(){var n=5,e=$("ad");playing=false;ui(true);e.classList.add("on");$("adc").textContent="Ton titre démarre dans "+n+" s";var t=setInterval(function(){n--;if(n<=0){clearInterval(t);e.classList.remove("on");play()}else $("adc").textContent="Ton titre démarre dans "+n+" s"},1000)}
+function settings(){return'<h2>Réglages</h2><div class="pl"><div class="sw"><span>Thème</span><select class="in" id="th"><option value="auto">Auto</option><option value="light">Clair</option><option value="dark">Sombre</option></select></div><div class="sw"><span>Lecture automatique du titre suivant</span><input type="checkbox" id="aa" '+(AUTO?'checked':'')+'></div></div><h2>kuka Premium</h2><div class="pl"><p>Bientôt : zéro pub, écoute hors ligne et qualité audio maximale.</p><button class="bt g" id="pw">Me prévenir</button></div><h2>Publicités</h2><div class="pl"><p>Une pub est diffusée tous les 3 titres. Elles disparaîtront avec Premium.</p></div>'}
 try{user=localStorage.getItem("kuka-user")||""}catch(e){}
 function loadD(){likes=[];PL=[];try{var d=JSON.parse(localStorage.getItem("kuka-d-"+user)||"{}");likes=(d.l||[]).filter(function(i){return i<8});PL=d.p||[]}catch(e){}}
 function saveL(){try{localStorage.setItem("kuka-d-"+user,JSON.stringify({l:likes,p:PL}))}catch(e){}}
@@ -114,9 +120,9 @@ nextT+=stepDur();stepI++}}
 var last=0;
 function tick(){var n=performance.now(),dt=(n-last)/1000;last=n;
 if(playing){if(T[cur].url){pos=au.currentTime;DUR=au.duration||60}else{pos+=dt;if(ctx)sched();if(pos>=DUR)done()}}ui()}
-function done(){if(rep===2){seekTo(0);if(T[cur].url)au.play()}else next(true)}
+function done(){if(rep===2){seekTo(0);if(T[cur].url)au.play()}else if(AUTO)next(true);else{pause();pos=0}}
 function seekTo(p){pos=Math.max(0,Math.min(DUR-.1,p));if(T[cur].url){au.currentTime=pos}else if(ctx){stepI=Math.floor(pos/stepDur());nextT=ctx.currentTime+.05}}
-function load(i,go){au.pause();cur=i;pos=0;stepI=0;DUR=60;if(ctx)nextT=ctx.currentTime+.05;if(go)play();render();ui(true)}
+function load(i,go){au.pause();cur=i;pos=0;stepI=0;DUR=60;if(ctx)nextT=ctx.currentTime+.05;if(go){if(!PREMIUM&&++CNT%3===0)showAd();else play()}render();ui(true)}
 function play(){if(T[cur].url){if(au.src!==T[cur].url)au.src=T[cur].url;au.volume=vol;au.play();playing=true;last=performance.now();ui(true);return}initAudio();if(ctx.state==="suspended")ctx.resume();nextT=ctx.currentTime+.05;stepI=Math.floor(pos/stepDur());playing=true;last=performance.now();ui(true)}
 function pause(){au.pause();playing=false;ui(true)}
 function next(auto){var n;if(shuf){do{n=Math.floor(Math.random()*T.length)}while(n===cur&&T.length>1)}else{n=cur+1;if(n>=T.length){if(rep===0&&auto){pause();pos=0;return}n=0}}load(n,true)}
@@ -134,14 +140,18 @@ var drag=false;
 function row(i){var t=T[i],l=likes.indexOf(i)>-1;
 return '<div class="row'+(i===cur?' on':'')+'" data-i="'+i+'" style="padding:0"><button class="row" data-play="'+i+'" style="flex:1;min-width:0;background:none"><div class="cv" style="background:'+grad(t)+'"></div><div class="m"><b>'+t.t+'</b><small>'+t.a+'</small></div></button><button class="hs'+(l?' l':'')+'" data-like="'+i+'" aria-label="Favori">'+(l?'♥':'♡')+'</button></div>'}
 function render(){var h="",idx=T.map(function(_,i){return i});
-if(view==="home"){h='<div class="free">Tout kuka est gratuit : pas de pub, pas d’abonnement, pas de limite d’écoute.</div><h2>À écouter</h2>'+idx.map(row).join("")}
+if(view==="home"){h='<div class="free">kuka est gratuit avec pubs. Le mode Premium arrive bientôt.</div><div class="bn">Publicité · Espace annonceur kuka</div><h2>À écouter</h2>'+idx.map(row).join("")}
 if(view==="search"){var f=idx.filter(function(i){return(T[i].t+" "+T[i].a).toLowerCase().indexOf(q.toLowerCase())>-1});
 h='<input class="search" id="q" placeholder="Titre ou artiste" value="'+q.replace(/"/g,"&quot;")+'" aria-label="Rechercher">'+(f.length?f.map(row).join(""):'<p class="empty">Aucun résultat. Essaie un autre titre ou artiste.</p>')}
 if(view==="fav"){h='<h2>Tes favoris</h2>'+(likes.length?likes.map(row).join(""):'<p class="empty">Aucun favori pour l’instant. Touche ♡ à côté d’un titre pour l’ajouter.</p>')}
 if(view==="home"){h+='<div class="pl"><b>Ta musique</b><p class="tag">Importe tes fichiers audio (mp3, m4a, wav) et une pochette. Ils restent disponibles pendant la session.</p><label class="bt">Importer des titres<input type="file" id="fa" accept="audio/*" multiple hidden></label><label class="bt g">Pochette du titre en cours<input type="file" id="fi" accept="image/*" hidden></label></div>'}
 if(view==="lists"){h='<h2>Playlists</h2><input class="in" id="pn" placeholder="Nom de la playlist"> <button class="bt" id="pc">Créer</button>'+(PL.length?PL.map(function(p,k){return'<div class="pl"><h3>'+esc(p.n)+'</h3>'+p.t.filter(function(i){return T[i]}).map(row).join("")+'<select class="in" id="ps'+k+'">'+T.map(function(t,i){return'<option value="'+i+'">'+esc(t.t)+'</option>'}).join("")+'</select> <button class="bt g" data-add="'+k+'">Ajouter</button><button class="bt g" data-del="'+k+'">Supprimer</button></div>'}).join(""):'<p class="empty">Aucune playlist. Donne un nom pour créer la première.</p>')}
 if(view==="me"){h='<h2>Profil</h2><div class="pl">'+(user?'<p>Connecté en tant que <b>'+esc(user)+'</b>. Tes favoris et playlists sont enregistrés sur cet appareil.</p><button class="bt g" id="lo">Changer de profil</button>':'<p>Choisis un pseudo pour enregistrer tes favoris et playlists.</p><input class="in" id="un" placeholder="Pseudo"> <button class="bt" id="ul">Entrer</button>')+'</div>'}
+if(view==="me"){h+=settings()}
 $("main").innerHTML=h;
+var th=$("th");if(th){th.value=THEME;th.onchange=function(){setTheme(th.value)}}
+var aa=$("aa");if(aa)aa.onchange=function(){AUTO=aa.checked};
+var pw=$("pw");if(pw)pw.onclick=function(){pw.textContent="C'est noté ✓"};
 var fa=$("fa");if(fa)fa.onchange=function(){Array.prototype.forEach.call(fa.files,function(f){T.push({t:f.name.replace(/\.[^.]+$/,""),a:"Mon fichier",url:URL.createObjectURL(f),c:["#6a5acd","#ff5d73"]})});render()};
 var fi=$("fi");if(fi)fi.onchange=function(){if(fi.files[0]){T[cur].img=URL.createObjectURL(fi.files[0]);render();ui(true)}};
 var pc=$("pc");if(pc)pc.onclick=function(){var n=$("pn").value.trim();if(n){PL.push({n:n,t:[]});saveL();render()}};
