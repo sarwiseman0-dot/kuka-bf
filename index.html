@@ -3,180 +3,487 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>kuka</title>
-<meta name="theme-color" content="#1a1024">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<title>Kuka</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbf4ff;--sf:#f0e3fb;--tx:#2a1740;--mu:#7b6591;--ac:#e8334f;--ac2:#f2a900;--ln:#dcc9ee;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1024;--sf:#281a38;--tx:#f5ecff;--mu:#a692bd;--ac:#ff5d73;--ac2:#ffc857;--ln:#3a2850}}
-:root[data-theme="dark"]{--bg:#1a1024;--sf:#281a38;--tx:#f5ecff;--mu:#a692bd;--ac:#ff5d73;--ac2:#ffc857;--ln:#3a2850}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.4 "Bricolage Grotesque",system-ui,sans-serif;padding-bottom:190px}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
-header{padding:20px 18px 6px;max-width:720px;margin:0 auto}
-.logo{font-weight:800;font-size:38px;letter-spacing:-2px;display:flex;align-items:center;gap:8px}
-.logo i{width:28px;height:28px;border-radius:50% 50% 50% 8px;background:linear-gradient(135deg,var(--ac),var(--ac2));display:inline-block;transform:rotate(-12deg)}
-.tag{color:var(--mu);margin:2px 0 0}
-main{max-width:720px;margin:0 auto;padding:10px 12px}
-h2{font-size:22px;margin:14px 6px 8px;font-weight:800}
-.search{width:100%;padding:12px 16px;border-radius:999px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;margin:8px 0}
-.row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:8px;border-radius:14px}
-.row:hover,.row.on{background:var(--sf)}
-.cv{flex:none;width:48px;height:48px;border-radius:10px}
-.row .m{flex:1;min-width:0}
-.row b,.row small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.row small{color:var(--mu)}
-.row.on b{color:var(--ac)}
-.hs{flex:none;font-size:20px;padding:6px;color:var(--mu)}
-.hs.l{color:var(--ac)}
-.empty{color:var(--mu);padding:30px 10px;text-align:center}
-.player{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));background:var(--sf);border-top:1px solid var(--ln);padding:10px 14px 8px;z-index:5}
-.pin{max-width:720px;margin:0 auto}
-.now{display:flex;align-items:center;gap:12px}
-.now .cv{width:52px;height:52px}
-.now .m{flex:1;min-width:0}
-.now b,.now small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.now small{color:var(--mu)}
-.ctl{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:4px}
-.ctl button{width:42px;height:42px;border-radius:50%;font-size:18px;color:var(--mu)}
-.ctl button.act{color:var(--ac)}
-.ctl .pp{width:50px;height:50px;background:var(--ac);color:#fff;font-size:20px}
-.bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
-input[type=range]{flex:1;accent-color:var(--ac);min-width:0}
-.vol{width:80px;flex:none}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--ln);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);z-index:6}
-nav button{flex:1;max-width:240px;height:58px;font-weight:600;color:var(--mu)}
-nav button.on{color:var(--ac)}
-.free{margin:10px 6px;padding:12px 14px;border-radius:14px;background:linear-gradient(120deg,var(--ac),var(--ac2));color:#2a1740;font-weight:600}
-.pl{background:var(--sf);border-radius:14px;padding:10px;margin:10px 0}.pl h3{margin:0 0 6px}.in{padding:10px 14px;border-radius:999px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;max-width:100%}.bt{display:inline-block;padding:10px 16px;border-radius:999px;background:var(--ac);color:#fff;font-weight:600;margin:4px 4px 4px 0;cursor:pointer}.bt.g{background:var(--ln);color:var(--tx)}nav button{font-size:13px}.ad{position:fixed;inset:0;background:rgba(10,5,20,.94);z-index:20;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff}.ad.on{display:flex}.ad>div{max-width:340px}.tg{font-size:12px;opacity:.7;letter-spacing:1px;text-transform:uppercase}.bn{margin:10px 6px;padding:10px 14px;border-radius:14px;border:1px dashed var(--ln);color:var(--mu);font-size:13px;text-align:center}.sw{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
+:root{--bg:#070907;--card:#121612;--card2:#1b211b;--tx:#f2f4ef;--mut:#8f9a8f;--g:#2fbf71;--gold:#d9b44a;--r:14px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',system-ui,-apple-system,sans-serif}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+input{font:inherit}
+#root{height:100%}
+.app{max-width:480px;margin:0 auto;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.main{flex:1;overflow-y:auto;padding:16px 16px 150px}
+h1{font-size:24px;margin:4px 0 16px;letter-spacing:-.5px}
+h2{font-size:17px;margin:26px 0 12px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:20px}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--g),#0d5a33);display:grid;place-items:center;border:1px solid var(--gold)}
+.row{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.card{flex:0 0 140px;text-align:left}
+.card b,.t b{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card span,.t span{font-size:12px;color:var(--mut)}
+.cov{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1;width:100%}
+.cov i{position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.25)}
+.cov em{position:absolute;left:10%;bottom:6%;font:700 28px/1 'Sora',sans-serif;font-style:normal;color:rgba(255,255,255,.85)}
+.art{border-radius:50%}
+.t{display:flex;align-items:center;gap:12px;padding:8px 0;width:100%;text-align:left}
+.t .cov{width:48px;flex:none}
+.t>div{flex:1;min-width:0}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.on{color:var(--g)}.fav{color:var(--gold)}
+.hero{border-radius:20px;padding:20px;margin-bottom:8px;background:linear-gradient(135deg,#0f3d24,#0a0f0a 70%);border:1px solid #2a3a22;position:relative}
+.hero p{margin:6px 0 14px;color:var(--mut);font-size:13px}
+.btn{background:var(--g);color:#03130a;font-weight:700;border-radius:99px;padding:11px 22px;font-size:14px}
+.btn.o{background:none;color:var(--tx);border:1px solid #3a463a}
+.btn:disabled{opacity:.55}
+.search{display:flex;align-items:center;gap:10px;background:var(--card2);border-radius:99px;padding:12px 16px}
+.search input{flex:1;background:none;border:0;outline:0;color:var(--tx);font-size:15px}
+.chips{display:flex;gap:8px;margin:14px 0;overflow-x:auto;scrollbar-width:none}
+.chip{padding:8px 16px;border-radius:99px;background:var(--card2);font-size:13px;white-space:nowrap}
+.chip.on{background:var(--g);color:#03130a;font-weight:600}
+.nav{position:absolute;left:0;right:0;bottom:0;display:flex;background:rgba(7,9,7,.96);border-top:1px solid #1e261e;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));z-index:5}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--mut)}
+.nav .on{color:var(--gold)}
+.mini{position:absolute;left:8px;right:8px;bottom:calc(66px + env(safe-area-inset-bottom,0px));background:var(--card2);border-radius:14px;display:flex;align-items:center;gap:10px;padding:8px 12px 10px;z-index:4;border:1px solid #2a342a}
+.mini .cov{width:42px;flex:none}
+.mini .bar{position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:#2d392d}
+.mini .bar div{height:100%;background:var(--gold)}
+.sheet{position:absolute;inset:0;background:linear-gradient(180deg,var(--c1,#0f3d24),var(--bg) 70%);z-index:10;padding:calc(14px + env(safe-area-inset-top,0px)) 24px 28px;display:flex;flex-direction:column;animation:up .25s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet{overflow-y:auto}
+.sheet .cov{border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.5);margin:0}
+.artw{width:min(100%,44vh);aspect-ratio:1;margin:16px auto 20px;flex:none;transition:transform .35s ease}
+.artw.pz{transform:scale(.9)}
+.auth{position:absolute;inset:0;z-index:40;background:radial-gradient(ellipse at top,#0f3d24,var(--bg) 60%);padding:calc(40px + env(safe-area-inset-top,0px)) 24px 30px;overflow-y:auto;display:flex;flex-direction:column}
+.fld{width:100%;background:var(--card2);border:1px solid #2a342a;border-radius:12px;padding:14px;color:var(--tx);font-size:15px;margin-bottom:12px;outline:0}
+.fld:focus{border-color:var(--gold)}
+.err{color:#ff8a7a;font-size:13px;margin:0 0 10px}
+.ctl .sm{position:relative;display:grid;place-items:center}
+.one{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;font-weight:700}
+.queue{position:absolute;inset:0;background:var(--bg);z-index:15;padding:calc(16px + env(safe-area-inset-top,0px)) 16px 24px;overflow-y:auto;animation:up .25s ease-out}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:#3a463a;outline:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--gold)}
+.ctl{display:flex;justify-content:center;align-items:center;gap:16px;margin:14px 0}
+.play{width:68px;height:68px;border-radius:50%;background:var(--g);color:#03130a;display:grid;place-items:center}
+.top{display:flex;justify-content:space-between;align-items:center}
+.back{padding:6px 0;color:var(--mut);display:flex;align-items:center;gap:4px;font-size:14px;margin-bottom:6px}
+.banner{padding:34px 20px 20px;margin:-16px -16px 0;display:flex;align-items:flex-end;gap:16px}
+.banner .cov{width:96px;flex:none}
+.pl{background:var(--card);border-radius:var(--r);padding:14px;display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-bottom:8px}
+.pl .cov{width:48px;flex:none}
+.box{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.set{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1e261e;font-size:14px}
+.set:last-child{border:0}
+.sw{width:44px;height:26px;border-radius:99px;background:#3a463a;position:relative}
+.sw.on{background:var(--g)}.sw:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.sw.on:after{left:21px}
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.65);z-index:20;display:flex;align-items:flex-end}
+.modal>div{background:var(--card);width:100%;border-radius:20px 20px 0 0;padding:20px 20px 30px}
+.toast{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1405;padding:9px 18px;border-radius:99px;font-size:13px;font-weight:600;z-index:30;white-space:nowrap}
+.gold{color:var(--gold)}
+.mut{color:var(--mut);font-size:13px}
+.empty{text-align:center;color:var(--mut);padding:30px 10px;font-size:14px}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo"><i></i>kuka</div>
-  <p class="tag">Toute la musique, gratuite avec pubs. Premium bientôt.</p>
-</header>
-<main id="main"></main>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
 
-<div class="player"><div class="pin">
-  <div class="now"><div class="cv" id="pcv"></div><div class="m"><b id="pt"></b><small id="pa"></small></div>
-    <button class="hs" id="plike" aria-label="Ajouter aux favoris">♡</button></div>
-  <div class="bar"><span id="cur">0:00</span><input type="range" id="seek" min="0" max="1000" value="0" aria-label="Position"><span id="dur">1:00</span></div>
-  <div class="ctl">
-    <button id="shuf" aria-label="Aléatoire">⇄</button>
-    <button id="prev" aria-label="Précédent">⏮</button>
-    <button class="pp" id="pp" aria-label="Lecture">▶</button>
-    <button id="next" aria-label="Suivant">⏭</button>
-    <button id="rep" aria-label="Répéter">↻</button>
-    <input type="range" class="vol" id="vol" min="0" max="100" value="70" aria-label="Volume">
-  </div>
-</div></div>
-
-<nav><button data-v="home" class="on">Accueil</button><button data-v="search">Recherche</button><button data-v="fav">Favoris</button><button data-v="lists">Playlists</button><button data-v="me">Réglages</button></nav>
-<div class="ad" id="ad"><div><p class="tg">Publicité</p><h2>Ta pub ici</h2><p>Espace réservé aux annonceurs de kuka.</p><p id="adc">Ton titre démarre dans 5 s</p></div></div>
-
-<script>
-var T=[
-{t:"Matin doré",a:"Kuka Lab",bpm:92,r:261.6,w:"triangle",p:[0,2,4,2,5,4,2,0,0,2,4,7,5,4,2,-1],c:["#ff9966","#ff5e62"]},
-{t:"Pluie sur Dakar",a:"Awa Beats",bpm:76,r:220,w:"sine",p:[0,-1,3,-1,5,-1,3,2,0,-1,3,5,7,5,3,-1],c:["#4facfe","#00f2fe"]},
-{t:"Nuit néon",a:"Synthia",bpm:118,r:196,w:"sawtooth",p:[0,0,7,0,5,0,3,0,0,0,7,0,8,7,5,3],c:["#a18cd1","#fbc2eb"]},
-{t:"Marché de midi",a:"Tonton Ziggy",bpm:104,r:293.7,w:"square",p:[4,-1,4,2,0,-1,2,4,5,-1,5,4,2,-1,0,-1],c:["#f6d365","#fda085"]},
-{t:"Lagune",a:"Kuka Lab",bpm:68,r:246.9,w:"sine",p:[0,2,4,7,4,2,0,-1,2,4,7,9,7,4,2,-1],c:["#43e97b","#38f9d7"]},
-{t:"Vélo de nuit",a:"Mina Sol",bpm:126,r:329.6,w:"triangle",p:[0,3,5,3,0,3,7,5,0,3,5,3,10,7,5,3],c:["#fa709a","#fee140"]},
-{t:"Sieste d'été",a:"Awa Beats",bpm:60,r:174.6,w:"sine",p:[0,-1,-1,2,4,-1,-1,2,0,-1,-1,4,5,-1,4,-1],c:["#84fab0","#8fd3f4"]},
-{t:"Chaleur",a:"Synthia",bpm:110,r:277.2,w:"sawtooth",p:[0,-1,0,3,5,-1,3,0,7,-1,5,3,5,3,0,-1],c:["#f093fb","#f5576c"]}
+/* ============ 1. DONNÉES FICTIVES (à remplacer plus tard par Supabase) ============
+   Tous les artistes, albums et titres ci-dessous sont inventés. */
+const ARTISTS = [
+  { id: "a1", name: "Zalissa K.", city: "Ouagadougou", genre: "Afro-pop", c: ["#1f8f55", "#0b3d24"], bio: "Voix solaire de Ouagadougou, Zalissa K. mêle rythmes mossi et production moderne. Artiste fictive pour la démonstration." },
+  { id: "a2", name: "Bâ Noogo", city: "Bobo-Dioulasso", genre: "Rap", c: ["#d9b44a", "#5a3d08"], bio: "Plume acérée de Bobo-Dioulasso, Bâ Noogo raconte la vie urbaine en mooré et en français. Artiste fictif pour la démonstration." },
+  { id: "a3", name: "Sidwaya Beats", city: "Koudougou", genre: "Électro", c: ["#2a6f97", "#0b1f33"], bio: "Producteur de Koudougou, il marie balafon échantillonné et basses électroniques. Artiste fictif pour la démonstration." },
+  { id: "a4", name: "Tiga Lumière", city: "Ouagadougou", genre: "Gospel", c: ["#9b4dca", "#2a0f3d"], bio: "Chorale et voix inspirées, Tiga Lumière rassemble les cœurs du dimanche. Artiste fictif pour la démonstration." },
+  { id: "a5", name: "Rama Soukou", city: "Banfora", genre: "Afro-pop", c: ["#c8553d", "#3d0f0a"], bio: "Chanteuse de Banfora, Rama Soukou chante les cascades, les marchés et les amours d’été. Artiste fictive pour la démonstration." },
 ];
-var SC=[0,2,3,5,7,8,10,12,14,15,17,19];
-var DUR=60,cur=0,pos=0,playing=false,shuf=false,rep=0,vol=.7,view="home",q="";
-var user="",likes=[],PL=[],au=new Audio(),PREMIUM=false,AUTO=true,CNT=0,THEME="auto";au.onended=function(){done()};
-try{THEME=localStorage.getItem("kuka-theme")||"auto"}catch(e){}
-function setTheme(t){THEME=t;var r=document.documentElement;if(t==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",t);try{localStorage.setItem("kuka-theme",t)}catch(e){}}
-setTheme(THEME);
-function showAd(){var n=5,e=$("ad");playing=false;ui(true);e.classList.add("on");$("adc").textContent="Ton titre démarre dans "+n+" s";var t=setInterval(function(){n--;if(n<=0){clearInterval(t);e.classList.remove("on");play()}else $("adc").textContent="Ton titre démarre dans "+n+" s"},1000)}
-function settings(){return'<h2>Réglages</h2><div class="pl"><div class="sw"><span>Thème</span><select class="in" id="th"><option value="auto">Auto</option><option value="light">Clair</option><option value="dark">Sombre</option></select></div><div class="sw"><span>Lecture automatique du titre suivant</span><input type="checkbox" id="aa" '+(AUTO?'checked':'')+'></div></div><h2>kuka Premium</h2><div class="pl"><p>Bientôt : zéro pub, écoute hors ligne et qualité audio maximale.</p><button class="bt g" id="pw">Me prévenir</button></div><h2>Publicités</h2><div class="pl"><p>Une pub est diffusée tous les 3 titres. Elles disparaîtront avec Premium.</p></div>'}
-try{user=localStorage.getItem("kuka-user")||""}catch(e){}
-function loadD(){likes=[];PL=[];try{var d=JSON.parse(localStorage.getItem("kuka-d-"+user)||"{}");likes=(d.l||[]).filter(function(i){return i<8});PL=d.p||[]}catch(e){}}
-function saveL(){try{localStorage.setItem("kuka-d-"+user,JSON.stringify({l:likes,p:PL}))}catch(e){}}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-loadD();
-var $=function(i){return document.getElementById(i)};
-function grad(t){return t.img?"center/cover url("+t.img+")":"linear-gradient(135deg,"+t.c[0]+","+t.c[1]+")"}
-function fmt(s){s=Math.floor(s);return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+const ALBUMS = [
+  { id: "b1", t: "Harmattan", ar: "a1", y: 2025, p: 2500, songs: ["Matin de Ouaga", "Lune sur le Wiliwili", "Pagne doré", "Sous le karité"] },
+  { id: "b2", t: "Bitume & Mil", ar: "a2", y: 2024, p: 2000, songs: ["Zone 4", "Grand frère", "Mobylette", "Rue des rêves"] },
+  { id: "b3", t: "Balafon 2.0", ar: "a3", y: 2025, p: 2500, songs: ["Pulse Faso", "Nuit de Koudougou", "Calebasse", "Neon Sahel"] },
+  { id: "b4", t: "Lumière du dimanche", ar: "a4", y: 2023, p: 1500, songs: ["Grâce", "Chant du matin", "Paix sur la ville"] },
+  { id: "b5", t: "Cascades", ar: "a5", y: 2025, p: 2000, songs: ["Danse à Banfora", "Rivière douce", "Marché du soir", "Écho du Comoé"] },
+];
+let seed = 3;
+const SONGS = ALBUMS.flatMap((al) => al.songs.map((t) => {
+  seed += 1;
+  return { id: "s" + seed, t, ar: al.ar, al: al.id, root: [196, 220, 247, 262, 294][seed % 5], bpm: 84 + (seed * 7) % 40, seed, wave: ["triangle", "sine", "square"][seed % 3] };
+}));
+const DUR = 60; // durée d’un son de démonstration (secondes)
+const NEW_IDS = ["b3", "b1", "b5"], TREND = SONGS.filter((_, i) => i % 3 === 0).slice(0, 6);
+const artistOf = (id) => ARTISTS.find((a) => a.id === id);
+const albumOf = (id) => ALBUMS.find((a) => a.id === id);
+const fmt = (s) => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+const money = (n) => n.toLocaleString("fr-FR").replace(/\u202f/g, " ") + " FCFA";
 
-/* Moteur audio : chaque titre est synthétisé en direct */
-var ctx,master,stepI=0,nextT=0,timer=null;
-function initAudio(){if(ctx)return;var C=window.AudioContext||window.webkitAudioContext;ctx=new C();master=ctx.createGain();master.gain.value=vol*vol;master.connect(ctx.destination)}
-function note(f,t,d,type,g){var o=ctx.createOscillator(),e=ctx.createGain();o.type=type;o.frequency.value=f;
-e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(g,t+.02);e.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(e);e.connect(master);o.start(t);o.stop(t+d+.05)}
-function stepDur(){return 60/T[cur].bpm/2}
-function sched(){var tr=T[cur];while(nextT<ctx.currentTime+.25){var i=stepI%16,d=T[cur].p[i];
-if(d>=0){var s=SC[d%SC.length],f=tr.r*Math.pow(2,s/12);note(f,nextT,stepDur()*1.8,tr.w,.16)}
-if(i%4===0){var b=SC[T[cur].p[Math.floor(i/4)*4]>=0?T[cur].p[Math.floor(i/4)*4]%SC.length:0];note(tr.r/2*Math.pow(2,b/12),nextT,stepDur()*3,"triangle",.22)}
-if(i%2===0){note(8000,nextT,.03,"square",.02)}
-nextT+=stepDur();stepI++}}
-var last=0;
-function tick(){var n=performance.now(),dt=(n-last)/1000;last=n;
-if(playing){if(T[cur].url){pos=au.currentTime;DUR=au.duration||60}else{pos+=dt;if(ctx)sched();if(pos>=DUR)done()}}ui()}
-function done(){if(rep===2){seekTo(0);if(T[cur].url)au.play()}else if(AUTO)next(true);else{pause();pos=0}}
-function seekTo(p){pos=Math.max(0,Math.min(DUR-.1,p));if(T[cur].url){au.currentTime=pos}else if(ctx){stepI=Math.floor(pos/stepDur());nextT=ctx.currentTime+.05}}
-function load(i,go){au.pause();cur=i;pos=0;stepI=0;DUR=60;if(ctx)nextT=ctx.currentTime+.05;if(go){if(!PREMIUM&&++CNT%3===0)showAd();else play()}render();ui(true)}
-function play(){if(T[cur].url){if(au.src!==T[cur].url)au.src=T[cur].url;au.volume=vol;au.play();playing=true;last=performance.now();ui(true);return}initAudio();if(ctx.state==="suspended")ctx.resume();nextT=ctx.currentTime+.05;stepI=Math.floor(pos/stepDur());playing=true;last=performance.now();ui(true)}
-function pause(){au.pause();playing=false;ui(true)}
-function next(auto){var n;if(shuf){do{n=Math.floor(Math.random()*T.length)}while(n===cur&&T.length>1)}else{n=cur+1;if(n>=T.length){if(rep===0&&auto){pause();pos=0;return}n=0}}load(n,true)}
-function prev(){if(pos>3){seekTo(0)}else load((cur-1+T.length)%T.length,true)}
+/* ============ 2. MOTEUR AUDIO ============
+   Sons de démonstration générés dans le navigateur (aucun fichier, aucun droit d’auteur).
+   Plus tard : remplacer par un <audio src="..."> pointant vers Supabase Storage. */
+const Engine = (() => {
+  let ctx, master, bus, timer, st = 0, n = 0, vol = 0.8;
+  const rnd = (s) => { s = Math.sin(s * 12.9898) * 43758.5453; return s - Math.floor(s); };
+  const SC = [0, 2, 4, 7, 9, 12, 14, 16];
+  const tone = (type, f, t, d, g) => {
+    const o = ctx.createOscillator(), e = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t);
+    e.gain.setValueAtTime(0.0001, t); e.gain.exponentialRampToValueAtTime(g, t + 0.01); e.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(e); e.connect(bus); o.start(t); o.stop(t + d + 0.05);
+  };
+  const step = (tr, k, t, beat) => {
+    if (k % 4 === 0) { tone("sine", tr.root / 2, t, beat * 1.8, 0.35); tone("sine", 90, t, 0.12, 0.3); }
+    const r = rnd(tr.seed * 3 + (k % 16));
+    if (k % 2 === 0 || r > 0.5) tone(tr.wave, tr.root * 2 ** (SC[Math.floor(r * 8)] / 12) * 2, t, beat * 0.9, 0.09);
+    if (k % 2 === 1) tone("square", 4000, t, 0.03, 0.015);
+  };
+  const stop = () => { clearInterval(timer); if (bus) { bus.disconnect(); bus = null; } };
+  return {
+    play(tr, off = 0) {
+      if (!ctx) { ctx = new (window.AudioContext || window.webkitAudioContext)(); master = ctx.createGain(); master.gain.value = vol; master.connect(ctx.destination); }
+      if (ctx.state === "suspended") ctx.resume();
+      stop(); bus = ctx.createGain(); bus.connect(master);
+      const beat = 60 / tr.bpm / 2; st = ctx.currentTime - off; n = Math.ceil(off / beat);
+      timer = setInterval(() => { while (n * beat + st < ctx.currentTime + 0.3) { const t = n * beat + st; if (t >= ctx.currentTime) step(tr, n, t, beat); n++; } }, 80);
+    },
+    stop, pos: () => (ctx ? ctx.currentTime - st : 0),
+    vol(v) { vol = v; if (master) master.gain.value = v; },
+  };
+})();
 
-/* Interface */
-function ui(full){var t=T[cur];$("pt").textContent=t.t;$("pa").textContent=t.a;$("pcv").style.background=grad(t);
-$("pp").textContent=playing?"⏸":"▶";$("pp").setAttribute("aria-label",playing?"Pause":"Lecture");
-$("cur").textContent=fmt(pos);$("dur").textContent=fmt(DUR);
-if(!drag)$("seek").value=pos/DUR*1000;
-var l=likes.indexOf(cur)>-1;$("plike").textContent=l?"♥":"♡";$("plike").className="hs"+(l?" l":"");
-$("shuf").className=shuf?"act":"";$("rep").className=rep?"act":"";$("rep").textContent=rep===2?"①":"↻";
-if(full){document.querySelectorAll(".row").forEach(function(r){r.classList.toggle("on",+r.dataset.i===cur)})}}
-var drag=false;
-function row(i){var t=T[i],l=likes.indexOf(i)>-1;
-return '<div class="row'+(i===cur?' on':'')+'" data-i="'+i+'" style="padding:0"><button class="row" data-play="'+i+'" style="flex:1;min-width:0;background:none"><div class="cv" style="background:'+grad(t)+'"></div><div class="m"><b>'+t.t+'</b><small>'+t.a+'</small></div></button><button class="hs'+(l?' l':'')+'" data-like="'+i+'" aria-label="Favori">'+(l?'♥':'♡')+'</button></div>'}
-function render(){var h="",idx=T.map(function(_,i){return i});
-if(view==="home"){h='<div class="free">kuka est gratuit avec pubs. Le mode Premium arrive bientôt.</div><div class="bn">Publicité · Espace annonceur kuka</div><h2>À écouter</h2>'+idx.map(row).join("")}
-if(view==="search"){var f=idx.filter(function(i){return(T[i].t+" "+T[i].a).toLowerCase().indexOf(q.toLowerCase())>-1});
-h='<input class="search" id="q" placeholder="Titre ou artiste" value="'+q.replace(/"/g,"&quot;")+'" aria-label="Rechercher">'+(f.length?f.map(row).join(""):'<p class="empty">Aucun résultat. Essaie un autre titre ou artiste.</p>')}
-if(view==="fav"){h='<h2>Tes favoris</h2>'+(likes.length?likes.map(row).join(""):'<p class="empty">Aucun favori pour l’instant. Touche ♡ à côté d’un titre pour l’ajouter.</p>')}
-if(view==="home"){h+='<div class="pl"><b>Ta musique</b><p class="tag">Importe tes fichiers audio (mp3, m4a, wav) et une pochette. Ils restent disponibles pendant la session.</p><label class="bt">Importer des titres<input type="file" id="fa" accept="audio/*" multiple hidden></label><label class="bt g">Pochette du titre en cours<input type="file" id="fi" accept="image/*" hidden></label></div>'}
-if(view==="lists"){h='<h2>Playlists</h2><input class="in" id="pn" placeholder="Nom de la playlist"> <button class="bt" id="pc">Créer</button>'+(PL.length?PL.map(function(p,k){return'<div class="pl"><h3>'+esc(p.n)+'</h3>'+p.t.filter(function(i){return T[i]}).map(row).join("")+'<select class="in" id="ps'+k+'">'+T.map(function(t,i){return'<option value="'+i+'">'+esc(t.t)+'</option>'}).join("")+'</select> <button class="bt g" data-add="'+k+'">Ajouter</button><button class="bt g" data-del="'+k+'">Supprimer</button></div>'}).join(""):'<p class="empty">Aucune playlist. Donne un nom pour créer la première.</p>')}
-if(view==="me"){h='<h2>Profil</h2><div class="pl">'+(user?'<p>Connecté en tant que <b>'+esc(user)+'</b>. Tes favoris et playlists sont enregistrés sur cet appareil.</p><button class="bt g" id="lo">Changer de profil</button>':'<p>Choisis un pseudo pour enregistrer tes favoris et playlists.</p><input class="in" id="un" placeholder="Pseudo"> <button class="bt" id="ul">Entrer</button>')+'</div>'}
-if(view==="me"){h+=settings()}
-$("main").innerHTML=h;
-var th=$("th");if(th){th.value=THEME;th.onchange=function(){setTheme(th.value)}}
-var aa=$("aa");if(aa)aa.onchange=function(){AUTO=aa.checked};
-var pw=$("pw");if(pw)pw.onclick=function(){pw.textContent="C'est noté ✓"};
-var fa=$("fa");if(fa)fa.onchange=function(){Array.prototype.forEach.call(fa.files,function(f){T.push({t:f.name.replace(/\.[^.]+$/,""),a:"Mon fichier",url:URL.createObjectURL(f),c:["#6a5acd","#ff5d73"]})});render()};
-var fi=$("fi");if(fi)fi.onchange=function(){if(fi.files[0]){T[cur].img=URL.createObjectURL(fi.files[0]);render();ui(true)}};
-var pc=$("pc");if(pc)pc.onclick=function(){var n=$("pn").value.trim();if(n){PL.push({n:n,t:[]});saveL();render()}};
-var ul=$("ul");if(ul)ul.onclick=function(){var n=$("un").value.trim();if(n){user=n;try{localStorage.setItem("kuka-user",user)}catch(e){}loadD();render()}};
-var lo=$("lo");if(lo)lo.onclick=function(){user="";try{localStorage.removeItem("kuka-user")}catch(e){}loadD();render()};
-var s=$("q");if(s){s.oninput=function(){q=s.value;var p=s.selectionStart;render();var n=$("q");n.focus();n.setSelectionRange(p,p)}}}
-$("main").addEventListener("click",function(e){var p=e.target.closest("[data-play]"),l=e.target.closest("[data-like]");
-if(p){var i=+p.dataset.play;if(i===cur){playing?pause():play()}else load(i,true)}
-if(l){toggleLike(+l.dataset.like)}
-var a=e.target.closest("[data-add]"),d=e.target.closest("[data-del]");
-if(a){var k=+a.dataset.add,v=+$("ps"+k).value;if(PL[k].t.indexOf(v)<0)PL[k].t.push(v);saveL();render()}
-if(d){PL.splice(+d.dataset.del,1);saveL();render()}});
-function toggleLike(i){var k=likes.indexOf(i);if(k>-1)likes.splice(k,1);else likes.push(i);saveL();render();ui(true)}
-$("plike").onclick=function(){toggleLike(cur)};
-$("pp").onclick=function(){playing?pause():play()};
-$("next").onclick=function(){next(false)};$("prev").onclick=prev;
-$("shuf").onclick=function(){shuf=!shuf;ui()};
-$("rep").onclick=function(){rep=(rep+1)%3;ui()};
-$("seek").oninput=function(){drag=true;pos=this.value/1000*DUR;$("cur").textContent=fmt(pos)};
-$("seek").onchange=function(){drag=false;seekTo(this.value/1000*DUR)};
-$("vol").oninput=function(){vol=this.value/100;au.volume=vol;if(master)master.gain.value=vol*vol};
-document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){view=b.dataset.v;document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x===b)});render();ui(true)}});
-render();ui(true);last=performance.now();setInterval(tick,100);
+/* Logique de lecture (fonctions pures, testables) */
+/*LOGIC_START*/
+const navIndex = ({ len, idx, dir, shuffle, hist, rnd = Math.random }) => {
+  if (len <= 1) return { idx: 0, hist: [] };
+  if (dir > 0) {
+    if (shuffle) { let j = Math.floor(rnd() * (len - 1)); if (j >= idx) j += 1; return { idx: j, hist: [...hist, idx] }; }
+    return { idx: (idx + 1) % len, hist };
+  }
+  if (shuffle && hist.length) return { idx: hist[hist.length - 1], hist: hist.slice(0, -1) };
+  return { idx: (idx - 1 + len) % len, hist };
+};
+const endAction = ({ len, idx, shuffle, repeat }) => (repeat === "one" ? "restart" : repeat === "all" || shuffle || idx < len - 1 ? "next" : "stop");
+const dropFromQueue = (queue, idx, j) => (j === idx || j < 0 || j >= queue.length ? { queue, idx } : { queue: queue.filter((_, i) => i !== j), idx: j < idx ? idx - 1 : idx });
+/*LOGIC_END*/
+const REPEAT_LABEL = { off: "désactivée", all: "toute la file", one: "un titre" };
+const fill = (p) => ({ background: `linear-gradient(to right,var(--gold) ${p}%,#3a463a ${p}%)` });
+
+/* ============ 3. COMPOSANTS D’INTERFACE ============ */
+const P = { home: "M3 11l9-8 9 8v10h-6v-6H9v6H3z", search: "M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-5-5", lib: "M4 4v16M9 4v16M14 6l6 14", user: "M12 4a4 4 0 100 8 4 4 0 000-8zM4 21c0-4 4-6 8-6s8 2 8 6", play: "M7 4l13 8-13 8z", pause: "M7 4h3v16H7zM14 4h3v16h-3z", next: "M5 5l10 7-10 7zM19 5v14", prev: "M19 5l-10 7 10 7zM5 5v14", heart: "M12 21s-8-5-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 6-8 11-8 11z", down: "M6 9l6 6 6-6", back: "M15 5l-7 7 7 7", plus: "M12 5v14M5 12h14", vol: "M4 9v6h4l5 4V5L8 9zM17 9a4 4 0 010 6", shuf: "M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3", rep: "M17 2l4 4-4 4M3 11V9a3 3 0 013-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 01-3 3H3", queue: "M4 6h12M4 12h12M4 18h8M18 14l4 3-4 3z", mute: "M4 9v6h4l5 4V5L8 9zM17 9l5 6M22 9l-5 6" };
+const Ic = ({ n, f, s = 22 }) => (<svg className="ic" width={s} height={s} viewBox="0 0 24 24" style={f ? { fill: "currentColor" } : null}><path d={P[n]} /></svg>);
+
+const Cover = ({ c, label, round, className = "" }) => (
+  <div className={"cov " + (round ? "art " : "") + className} style={{ background: `linear-gradient(135deg,${c[0]},${c[1]})` }}>
+    <i style={{ width: "70%", height: "70%", right: "-15%", top: "-15%" }} />
+    <i style={{ width: "40%", height: "40%", right: "12%", top: "30%", borderColor: "rgba(217,180,74,.5)" }} />
+    <em>{label}</em>
+  </div>
+);
+const SongCover = ({ s }) => <Cover c={artistOf(s.ar).c} label={s.t[0]} />;
+
+function TrackRow({ s, i, ctx }) {
+  const { cur, playing, favs, play, toggleFav } = ctx;
+  const on = cur && cur.id === s.id;
+  return (
+    <div className="t">
+      <button className="t" style={{ padding: 0, flex: 1, minWidth: 0 }} onClick={() => play(s, i)}>
+        <SongCover s={s} />
+        <div><b className={on ? "on" : ""}>{s.t}</b><span>{artistOf(s.ar).name}</span></div>
+      </button>
+      <button onClick={() => toggleFav(s.id)} aria-label="Favori" className={favs.includes(s.id) ? "fav" : ""} style={{ color: favs.includes(s.id) ? "var(--gold)" : "var(--mut)" }}><Ic n="heart" f={favs.includes(s.id)} /></button>
+    </div>
+  );
+}
+const List = ({ songs, ctx }) => songs.length ? songs.map((s, i) => <TrackRow key={s.id} s={s} i={i} ctx={{ ...ctx, play: (t) => ctx.play(t, i, songs) }} />) : <div className="empty">Aucun titre pour le moment.</div>;
+const AlbumCard = ({ al, go }) => (
+  <button className="card" onClick={() => go({ k: "album", id: al.id })}>
+    <Cover c={artistOf(al.ar).c} label={al.t[0]} /><b style={{ marginTop: 8 }}>{al.t}</b><span>{artistOf(al.ar).name}</span>
+  </button>
+);
+
+/* ---------- Écrans ---------- */
+function Home({ ctx, go }) {
+  return (<>
+    <div className="top" style={{ marginBottom: 14 }}>
+      <div className="brand"><div className="logo" style={{ color: "var(--gold)", fontWeight: 700, fontSize: 17 }}>{BRAND.name[0]}</div>{BRAND.name}</div>
+      <span className="mut">Bonsoir 👋</span>
+    </div>
+    <div className="hero">
+      <b className="gold" style={{ fontSize: 12 }}>Sons du Faso</b>
+      <h1 style={{ margin: "6px 0 0" }}>Écoute la musique<br />qui te ressemble</h1>
+      <p>Découvre les voix de Ouaga, Bobo, Koudougou et Banfora.</p>
+      <button className="btn" onClick={() => ctx.play(SONGS[0], 0, SONGS)}>Lecture aléatoire</button>
+    </div>
+    <h2>Nouveautés</h2>
+    <div className="row">{NEW_IDS.map((id) => <AlbumCard key={id} al={albumOf(id)} go={go} />)}</div>
+    <h2>Tendances au Burkina</h2>
+    <List songs={TREND} ctx={ctx} />
+    <h2>Artistes à suivre</h2>
+    <div className="row">{ARTISTS.map((a) => (
+      <button key={a.id} className="card" style={{ flexBasis: 100, textAlign: "center" }} onClick={() => go({ k: "artist", id: a.id })}>
+        <Cover c={a.c} label={a.name[0]} round /><b style={{ marginTop: 8 }}>{a.name}</b><span>{a.genre}</span>
+      </button>))}
+    </div>
+    <h2>Tous les albums</h2>
+    <div className="row">{ALBUMS.map((al) => <AlbumCard key={al.id} al={al} go={go} />)}</div>
+  </>);
+}
+
+function Search({ ctx, go }) {
+  const [q, setQ] = useState(""), [f, setF] = useState("Tout");
+  const k = q.trim().toLowerCase();
+  const songs = k ? SONGS.filter((s) => s.t.toLowerCase().includes(k) || artistOf(s.ar).name.toLowerCase().includes(k)) : [];
+  const albums = k ? ALBUMS.filter((a) => a.t.toLowerCase().includes(k) || artistOf(a.ar).name.toLowerCase().includes(k)) : [];
+  const artists = k ? ARTISTS.filter((a) => a.name.toLowerCase().includes(k) || a.genre.toLowerCase().includes(k) || a.city.toLowerCase().includes(k)) : [];
+  const show = (x) => f === "Tout" || f === x;
+  return (<>
+    <h1>Recherche</h1>
+    <label className="search"><Ic n="search" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Titres, albums, artistes…" /></label>
+    <div className="chips">{["Tout", "Titres", "Albums", "Artistes"].map((x) => <button key={x} className={"chip " + (f === x ? "on" : "")} onClick={() => setF(x)}>{x}</button>)}</div>
+    {!k && (<><h2 style={{ marginTop: 6 }}>Parcourir par genre</h2>
+      <div className="chips" style={{ flexWrap: "wrap" }}>{[...new Set(ARTISTS.map((a) => a.genre))].map((g) => <button key={g} className="chip" onClick={() => setQ(g)}>{g}</button>)}</div></>)}
+    {k && !songs.length && !albums.length && !artists.length && <div className="empty">Aucun résultat pour « {q} ». Essaie un autre mot.</div>}
+    {show("Titres") && songs.length > 0 && <><h2>Titres</h2><List songs={songs} ctx={ctx} /></>}
+    {show("Albums") && albums.length > 0 && <><h2>Albums</h2><div className="row">{albums.map((a) => <AlbumCard key={a.id} al={a} go={go} />)}</div></>}
+    {show("Artistes") && artists.length > 0 && <><h2>Artistes</h2>{artists.map((a) => (
+      <button key={a.id} className="t" onClick={() => go({ k: "artist", id: a.id })}><Cover c={a.c} label={a.name[0]} round /><div><b>{a.name}</b><span>{a.genre} • {a.city}</span></div></button>))}</>}
+  </>);
+}
+
+function Library({ ctx, go, playlists, setPlaylists, flash }) {
+  const [tab, setTab] = useState("Favoris"), [name, setName] = useState(""), [open, setOpen] = useState(null);
+  const favSongs = SONGS.filter((s) => ctx.favs.includes(s.id));
+  const create = () => { if (!name.trim()) return; setPlaylists([...playlists, { id: "p" + Date.now(), name: name.trim(), ids: [] }]); setName(""); flash("Playlist créée"); };
+  const pl = playlists.find((p) => p.id === open);
+  if (pl) return (<>
+    <button className="back" onClick={() => setOpen(null)}><Ic n="back" /> Bibliothèque</button>
+    <h1>{pl.name}</h1>
+    <p className="mut">{pl.ids.length} titre(s)</p>
+    <div style={{ display: "flex", gap: 10, margin: "12px 0" }}>
+      <button className="btn" disabled={!pl.ids.length} onClick={() => { const l = pl.ids.map((i) => SONGS.find((s) => s.id === i)); ctx.play(l[0], 0, l); }}>Lire</button>
+      <button className="btn o" onClick={() => { setPlaylists(playlists.filter((p) => p.id !== pl.id)); setOpen(null); flash("Playlist supprimée"); }}>Supprimer</button>
+    </div>
+    {pl.ids.length ? pl.ids.map((id, i) => { const s = SONGS.find((x) => x.id === id), l = pl.ids.map((j) => SONGS.find((x) => x.id === j)); return (
+      <div key={id} style={{ display: "flex", alignItems: "center" }}><div style={{ flex: 1, minWidth: 0 }}><TrackRow s={s} i={i} ctx={{ ...ctx, play: (t) => ctx.play(t, i, l) }} /></div>
+        <button className="mut" style={{ marginLeft: 8, fontSize: 12 }} onClick={() => setPlaylists(playlists.map((p) => p.id === pl.id ? { ...p, ids: p.ids.filter((x) => x !== id) } : p))}>Retirer</button></div>); })
+      : <div className="empty">Playlist vide. Ajoute des titres depuis le lecteur (bouton +).</div>}
+  </>);
+  return (<>
+    <h1>Ma bibliothèque</h1>
+    <div className="chips" style={{ marginTop: 0 }}>{["Favoris", "Playlists"].map((x) => <button key={x} className={"chip " + (tab === x ? "on" : "")} onClick={() => setTab(x)}>{x}</button>)}</div>
+    {tab === "Favoris" && (favSongs.length ? <List songs={favSongs} ctx={ctx} /> : <div className="empty">Pas encore de favoris.<br />Touche le cœur à côté d’un titre pour l’ajouter ici.</div>)}
+    {tab === "Playlists" && (<>
+      <div className="search" style={{ marginBottom: 14 }}><input value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && create()} placeholder="Nom de la nouvelle playlist" /><button className="gold" onClick={create} aria-label="Créer"><Ic n="plus" /></button></div>
+      {playlists.map((p) => { const f = SONGS.find((s) => s.id === p.ids[0]); return (
+        <button key={p.id} className="pl" onClick={() => setOpen(p.id)}>
+          <Cover c={f ? artistOf(f.ar).c : ["#26302a", "#101410"]} label="♪" /><div><b>{p.name}</b><div className="mut">{p.ids.length} titre(s)</div></div></button>); })}
+    </>)}
+  </>);
+}
+
+function Artist({ id, ctx, go, back }) {
+  const a = artistOf(id), songs = SONGS.filter((s) => s.ar === id);
+  return (<>
+    <button className="back" onClick={back}><Ic n="back" /> Retour</button>
+    <div className="banner" style={{ background: `linear-gradient(180deg,${a.c[0]}88,transparent)` }}>
+      <Cover c={a.c} label={a.name[0]} round /><div><h1 style={{ margin: 0 }}>{a.name}</h1><span className="mut">{a.genre} • {a.city}</span></div>
+    </div>
+    <div style={{ margin: "16px 0" }}><button className="btn" onClick={() => ctx.play(songs[0], 0, songs)}>Tout lire</button></div>
+    <h2 style={{ marginTop: 8 }}>À propos</h2><p className="mut" style={{ lineHeight: 1.6 }}>{a.bio}</p>
+    <h2>Albums</h2><div className="row">{ALBUMS.filter((x) => x.ar === id).map((al) => <AlbumCard key={al.id} al={al} go={go} />)}</div>
+    <h2>Chansons populaires</h2><List songs={songs} ctx={ctx} />
+  </>);
+}
+
+function Album({ id, ctx, go, back }) {
+  const al = albumOf(id), a = artistOf(al.ar), songs = SONGS.filter((s) => s.al === id);
+  return (<>
+    <button className="back" onClick={back}><Ic n="back" /> Retour</button>
+    <div style={{ width: 200, margin: "6px auto 16px" }}><Cover c={a.c} label={al.t[0]} /></div>
+    <h1 style={{ marginBottom: 4 }}>{al.t}</h1>
+    <button className="mut" onClick={() => go({ k: "artist", id: a.id })}>{a.name} • {al.y}</button>
+    <div style={{ display: "flex", gap: 10, alignItems: "center", margin: "14px 0" }}>
+      <button className="btn" onClick={() => ctx.play(songs[0], 0, songs)}>Écouter</button>
+    </div>
+    <List songs={songs} ctx={ctx} />
+  </>);
+}
+
+function Profile({ flash, user, logout }) {
+  const [s, setS] = useState({ wifi: true, notif: true, hq: false });
+  const Sw = ({ k, label }) => <div className="set">{label}<button className={"sw " + (s[k] ? "on" : "")} onClick={() => setS({ ...s, [k]: !s[k] })} aria-label={label} /></div>;
+  return (<>
+    <h1>Profil</h1>
+    <div className="box" style={{ display: "flex", gap: 14, alignItems: "center" }}>
+      <Cover c={["#2fbf71", "#0b3d24"]} label={user.name[0].toUpperCase()} round className="" /><div style={{ width: 0, flex: 1 }}><b>{user.name}</b><div className="mut">{user.email || "Mode invité"}</div><div className="mut">Compte de démonstration</div></div>
+    </div>
+    <div className="box"><b>Paramètres</b>
+      <Sw k="wifi" label="Streaming en Wi-Fi uniquement" /><Sw k="hq" label="Qualité audio élevée" /><Sw k="notif" label="Notifications nouveautés" />
+      <div className="set">Langue<span className="mut">Français</span></div>
+    </div>
+    <button className="btn o" style={{ width: "100%" }} onClick={logout}>Se déconnecter</button>
+  </>);
+}
+
+function Player({ ctx, close, pos, preSeek, commitSeek, addTo, openQueue }) {
+  const { cur, playing, favs, toggle, next, prev, toggleFav, vol, setVol, shuffle, setShuffle, repeat, cycleRepeat } = ctx;
+  const lastVol = useRef(0.8), pct = (pos / DUR) * 100;
+  const a = artistOf(cur.ar);
+  return (
+    <div className="sheet" style={{ "--c1": a.c[1] }}>
+      <div className="top"><button onClick={close} aria-label="Réduire"><Ic n="down" s={28} /></button><span className="mut">En lecture</span><button onClick={addTo} aria-label="Ajouter à une playlist"><Ic n="plus" s={26} /></button></div>
+      <div className={"artw " + (playing ? "" : "pz")}><Cover c={a.c} label={cur.t[0]} /></div>
+      <div className="top"><div style={{ minWidth: 0 }}><h1 style={{ margin: 0, fontSize: 22 }}>{cur.t}</h1><div className="mut">{a.name} • {albumOf(cur.al).t}</div></div>
+        <button onClick={() => toggleFav(cur.id)} style={{ color: favs.includes(cur.id) ? "var(--gold)" : "var(--mut)" }} aria-label="Favori"><Ic n="heart" f={favs.includes(cur.id)} s={26} /></button></div>
+      <div style={{ marginTop: 20 }}>
+        <input type="range" min="0" max={DUR} step="0.5" value={pos} style={fill(pct)} onChange={(e) => preSeek(+e.target.value)} onPointerUp={(e) => commitSeek(+e.target.value)} onPointerCancel={(e) => commitSeek(+e.target.value)} onKeyUp={(e) => commitSeek(+e.target.value)} onBlur={(e) => commitSeek(+e.target.value)} aria-label="Progression" />
+        <div className="top mut" style={{ marginTop: 6, fontSize: 12 }}><span>{fmt(pos)}</span><span>{fmt(DUR)}</span></div>
+      </div>
+      <div className="ctl"><button className="sm" style={{ color: shuffle ? "var(--gold)" : "var(--mut)" }} onClick={() => setShuffle(!shuffle)} aria-label="Lecture aléatoire" aria-pressed={shuffle}><Ic n="shuf" /></button><button onClick={prev} aria-label="Précédent"><Ic n="prev" f s={28} /></button>
+        <button className="play" onClick={toggle} aria-label="Lecture/Pause"><Ic n={playing ? "pause" : "play"} f s={30} /></button>
+        <button onClick={next} aria-label="Suivant"><Ic n="next" f s={28} /></button><button className="sm" style={{ color: repeat !== "off" ? "var(--gold)" : "var(--mut)" }} onClick={cycleRepeat} aria-label={"Répétition : " + REPEAT_LABEL[repeat]}><Ic n="rep" />{repeat === "one" && <span className="one">1</span>}</button></div>
+      <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: "auto", paddingTop: 12 }}><button onClick={() => { if (vol > 0) { lastVol.current = vol; setVol(0); } else setVol(lastVol.current || 0.8); }} aria-label={vol > 0 ? "Couper le son" : "Rétablir le son"} style={{ color: vol > 0 ? "var(--tx)" : "var(--mut)" }}><Ic n={vol > 0 ? "vol" : "mute"} /></button><input type="range" min="0" max="1" step="0.01" value={vol} style={fill(vol * 100)} onChange={(e) => setVol(+e.target.value)} aria-label="Volume" /><button onClick={openQueue} aria-label="File d’attente"><Ic n="queue" /></button></div>
+      <p className="mut" style={{ fontSize: 11, textAlign: "center", marginBottom: 0 }}>Son de démonstration généré par l’application</p>
+    </div>
+  );
+}
+
+function QueueView({ queue, idx, shuffle, close, jump, remove }) {
+  const row = (s, i, on) => (
+    <div className="t" key={i}>
+      <button className="t" style={{ padding: 0, flex: 1, minWidth: 0 }} onClick={() => jump(i)}>
+        <SongCover s={s} /><div><b className={on ? "on" : ""}>{s.t}</b><span>{artistOf(s.ar).name}</span></div></button>
+      {!on && <button className="mut" onClick={() => remove(i)} aria-label={"Retirer " + s.t}>Retirer</button>}
+    </div>);
+  const rest = queue.map((s, i) => ({ s, i })).filter((x) => x.i > idx);
+  return (
+    <div className="queue">
+      <div className="top"><button onClick={close} aria-label="Fermer la file"><Ic n="down" s={28} /></button><b>File d’attente</b><span style={{ width: 28 }} /></div>
+      {shuffle && <p className="mut" style={{ marginBottom: 0 }}>Lecture aléatoire activée : le prochain titre est choisi au hasard.</p>}
+      <h2>En cours</h2>{row(queue[idx], idx, true)}
+      <h2>À suivre</h2>{rest.length ? rest.map((x) => row(x.s, x.i, false)) : <div className="empty">Plus aucun titre à la suite. Ajoute-en avec le bouton + du lecteur.</div>}
+      {idx > 0 && <><h2>Déjà écoutés</h2>{queue.slice(0, idx).map((s, i) => row(s, i, false))}</>}
+    </div>
+  );
+}
+
+/* ---------- Réglages de marque : change le nom ici, il se met à jour partout ---------- */
+const BRAND = { name: "Kuka" };
+/* Sauvegarde sur le téléphone (en attendant Supabase). Le mot de passe n’est jamais enregistré. */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("fp_" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("fp_" + k, JSON.stringify(v)); } catch (e) {} },
+};
+
+function Auth({ onLogin }) {
+  const [mode, setMode] = useState("in"), [name, setName] = useState(""), [email, setEmail] = useState(""), [pw, setPw] = useState(""), [err, setErr] = useState("");
+  const submit = () => {
+    const em = email.trim();
+    if (mode === "up" && !name.trim()) return setErr("Entre ton prénom.");
+    if (!/^\S+@\S+\.\S+$/.test(em)) return setErr("Entre une adresse e-mail valide.");
+    if (pw.length < 6) return setErr("Le mot de passe doit contenir au moins 6 caractères.");
+    onLogin({ name: mode === "up" ? name.trim() : em.split("@")[0], email: em });
+  };
+  return (
+    <div className="auth">
+      <div className="brand" style={{ fontSize: 26, marginBottom: 6 }}><div className="logo" style={{ width: 40, height: 40, color: "var(--gold)", fontWeight: 700, fontSize: 22 }}>{BRAND.name[0]}</div>{BRAND.name}</div>
+      <p className="mut" style={{ margin: "0 0 28px" }}>La musique du Burkina, dans ta poche.</p>
+      <h1>{mode === "in" ? "Connexion" : "Créer un compte"}</h1>
+      {mode === "up" && <input className="fld" placeholder="Prénom" autoComplete="given-name" value={name} onChange={(e) => setName(e.target.value)} />}
+      <input className="fld" type="email" placeholder="Adresse e-mail" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input className="fld" type="password" placeholder="Mot de passe (6 caractères minimum)" autoComplete={mode === "in" ? "current-password" : "new-password"} value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
+      {err && <p className="err">{err}</p>}
+      <button className="btn" onClick={submit}>{mode === "in" ? "Se connecter" : "Créer mon compte"}</button>
+      <button className="mut" style={{ margin: "16px 0", textAlign: "center" }} onClick={() => { setMode(mode === "in" ? "up" : "in"); setErr(""); }}>{mode === "in" ? "Pas encore de compte ? Inscris-toi" : "Déjà un compte ? Connecte-toi"}</button>
+      <button className="btn o" onClick={() => onLogin({ name: "Invité", email: "" })}>Continuer en invité</button>
+      <p className="mut" style={{ fontSize: 11, textAlign: "center", marginTop: "auto", paddingTop: 24 }}>Version de démonstration : aucun compte réel n’est créé et rien n’est envoyé sur internet.</p>
+    </div>
+  );
+}
+
+/* ============ 4. APPLICATION ============ */
+function App() {
+  const [tab, setTab] = useState("home"), [stack, setStack] = useState([]);
+  const [queue, setQueue] = useState(SONGS), [idx, setIdx] = useState(0), [cur, setCur] = useState(null);
+  const [playing, setPlaying] = useState(false), [pos, setPos] = useState(0), [vol, setVolS] = useState(0.8), [full, setFull] = useState(false);
+  const [favs, setFavs] = useState(() => store.get("favs", ["s4", "s9"])), [toast, setToast] = useState(null), [adding, setAdding] = useState(false);
+  const [user, setUser] = useState(() => store.get("user", null));
+  const [shuffle, setShuffle] = useState(false), [repeat, setRepeat] = useState("off"), [showQueue, setShowQueue] = useState(false);
+  const hist = useRef([]), seeking = useRef(false);
+  const [playlists, setPlaylists] = useState(() => store.get("playlists", null) || [
+    { id: "p1", name: "Maquis du samedi", ids: ["s4", "s8", "s12"] },
+    { id: "p2", name: "Route vers Bobo", ids: ["s9", "s14"] },
+  ]);
+  const mainRef = useRef(null);
+  const flash = (m) => { setToast(m); setTimeout(() => setToast(null), 1800); };
+  const start = (t, i, q, off = 0) => { setCur(t); setQueue(q); setIdx(i); setPos(off); setPlaying(true); Engine.play(t, off); };
+  const play = (t, i = 0, q = SONGS) => { const j = q.findIndex((x) => x.id === t.id); hist.current = []; start(t, j < 0 ? 0 : j, q); setFull(true); };
+  const toggle = () => { if (!cur) return; if (playing) { Engine.stop(); setPlaying(false); } else { setPlaying(true); Engine.play(cur, pos); } };
+  const step = (d) => { const r = navIndex({ len: queue.length, idx, dir: d, shuffle, hist: hist.current }); hist.current = r.hist; start(queue[r.idx], r.idx, queue); };
+  const next = () => step(1), prev = () => (pos > 3 ? start(cur, idx, queue) : step(-1));
+  const onEnd = () => { const a = endAction({ len: queue.length, idx, shuffle, repeat }); if (a === "restart") start(cur, idx, queue); else if (a === "next") next(); else { Engine.stop(); setPlaying(false); setPos(0); } };
+  const preSeek = (v) => { seeking.current = true; setPos(v); };
+  const commitSeek = (v) => { if (!seeking.current) return; seeking.current = false; setPos(v); if (playing) Engine.play(cur, v); };
+  const setVol = (v) => { setVolS(v); Engine.vol(v); };
+  const toggleFav = (id) => { const on = favs.includes(id); setFavs(on ? favs.filter((x) => x !== id) : [...favs, id]); flash(on ? "Retiré des favoris" : "Ajouté aux favoris"); };
+  useEffect(() => { if (!playing) return; const h = setInterval(() => { if (seeking.current) return; const p = Engine.pos(); if (p >= DUR) onEnd(); else setPos(p); }, 250); return () => clearInterval(h); });
+  useEffect(() => { if (mainRef.current) mainRef.current.scrollTop = 0; }, [tab, stack.length]);
+  useEffect(() => { store.set("favs", favs); }, [favs]);
+  useEffect(() => { store.set("playlists", playlists); }, [playlists]);
+
+  const toggleShuf = (v) => { hist.current = []; setShuffle(v); flash(v ? "Lecture aléatoire activée" : "Lecture aléatoire désactivée"); };
+  const cycleRepeat = () => { const n = { off: "all", all: "one", one: "off" }[repeat]; setRepeat(n); flash("Répétition : " + REPEAT_LABEL[n]); };
+  const jumpQ = (j) => start(queue[j], j, queue);
+  const removeQ = (j) => { const r = dropFromQueue(queue, idx, j); hist.current = []; setQueue(r.queue); setIdx(r.idx); };
+  const addQ = (s) => { setQueue([...queue, s]); flash("Ajouté à la file d’attente"); };
+  const ctx = { cur, playing, favs, play, toggleFav, toggle, next, prev, vol, setVol, shuffle, setShuffle: toggleShuf, repeat, cycleRepeat };
+  const go = (v) => setStack([...stack, v]), back = () => setStack(stack.slice(0, -1));
+  const top = stack[stack.length - 1];
+  const login = (u) => { store.set("user", u); setUser(u); flash("Bienvenue " + u.name + " !"); };
+  const logout = () => { Engine.stop(); setPlaying(false); setCur(null); setFull(false); setShowQueue(false); setAdding(false); setStack([]); setTab("home"); store.set("user", null); setUser(null); };
+  const nav = [["home", "Accueil", "home"], ["search", "Recherche", "search"], ["lib", "Bibliothèque", "lib"], ["me", "Profil", "user"]];
+
+  return (
+    <div className="app">
+      {toast && <div className="toast">{toast}</div>}
+      {!user && <Auth onLogin={login} />}
+      <div className="main" ref={mainRef}>
+        {top ? (top.k === "artist" ? <Artist id={top.id} ctx={ctx} go={go} back={back} /> : <Album id={top.id} ctx={ctx} go={go} back={back} />)
+          : tab === "home" ? <Home ctx={ctx} go={go} />
+          : tab === "search" ? <Search ctx={ctx} go={go} />
+          : tab === "lib" ? <Library ctx={ctx} go={go} playlists={playlists} setPlaylists={setPlaylists} flash={flash} />
+          : <Profile flash={flash} user={user || { name: "?", email: "" }} logout={logout} />}
+      </div>
+      {cur && (
+        <div className="mini" onClick={() => setFull(true)}>
+          <SongCover s={cur} />
+          <div style={{ flex: 1, minWidth: 0 }}><b style={{ fontSize: 13, display: "block", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{cur.t}</b><span className="mut" style={{ fontSize: 12 }}>{artistOf(cur.ar).name}</span></div>
+          <button onClick={(e) => { e.stopPropagation(); toggle(); }} aria-label="Lecture/Pause"><Ic n={playing ? "pause" : "play"} f s={26} /></button>
+          <button onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Suivant"><Ic n="next" f s={24} /></button>
+          <div className="bar"><div style={{ width: (pos / DUR) * 100 + "%" }} /></div>
+        </div>
+      )}
+      <nav className="nav">{nav.map(([k, l, i]) => (
+        <button key={k} className={tab === k && !top ? "on" : ""} onClick={() => { setTab(k); setStack([]); }}><Ic n={i} />{l}</button>))}
+      </nav>
+      {full && cur && <Player ctx={ctx} close={() => setFull(false)} pos={pos} preSeek={preSeek} commitSeek={commitSeek} addTo={() => setAdding(true)} openQueue={() => setShowQueue(true)} />}
+      {showQueue && cur && <QueueView queue={queue} idx={idx} shuffle={shuffle} close={() => setShowQueue(false)} jump={jumpQ} remove={removeQ} />}
+      {adding && cur && (
+        <div className="modal" onClick={() => setAdding(false)}><div onClick={(e) => e.stopPropagation()}>
+          <b>Ajouter à…</b><div style={{ height: 12 }} /><button className="set" style={{ width: "100%" }} onClick={() => { addQ(cur); setAdding(false); }}>File d’attente<span className="mut">À la suite</span></button>
+          {playlists.map((p) => <button key={p.id} className="set" style={{ width: "100%" }} onClick={() => { if (!p.ids.includes(cur.id)) setPlaylists(playlists.map((x) => x.id === p.id ? { ...x, ids: [...x.ids, cur.id] } : x)); setAdding(false); flash("Ajouté à " + p.name); }}>{p.name}<span className="mut">{p.ids.length} titres</span></button>)}
+        </div></div>
+      )}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
-<script src="android.js"></script>
 </body>
 </html>
