@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>kuka</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1024">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fbf4ff;--sf:#f0e3fb;--tx:#2a1740;--mu:#7b6591;--ac:#e8334f;--ac2:#f2a900;--ln:#dcc9ee;
@@ -176,5 +180,6 @@ $("vol").oninput=function(){vol=this.value/100;au.volume=vol;if(master)master.ga
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){view=b.dataset.v;document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x===b)});render();ui(true)}});
 render();ui(true);last=performance.now();setInterval(tick,100);
 </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
 </body>
 </html>
