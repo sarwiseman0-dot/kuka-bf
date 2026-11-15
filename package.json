@@ -1,0 +1,16 @@
+{
+  "name": "kuka-music",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KUKA MUSIC - application Android (Capacitor)",
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}
